@@ -1,0 +1,663 @@
+{
+	"info": {
+		"_postman_id": "6bd5aa3d-cc36-4fe7-be75-cfa476e99859",
+		"name": "Petstore API tests collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Позитивні тести",
+			"item": [
+				{
+					"name": "Перевірка POST запиту /pet",
+					"item": [
+						{
+							"name": "Виконання запиту, з усіма валідними параметрами в тілі запиту",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"var photoUrls = data.photoUrls[0]; //data is array\r",
+											"\r",
+											"// перевірка даних у відповіді\r",
+											"pm.test(\"Перевірка даних у відповіді\", () => {\r",
+											"  const responseJson = pm.response.json();\r",
+											"  pm.expect(responseJson.id).to.eql(1);\r",
+											"  pm.expect(responseJson.category.id).to.eql(1);\r",
+											"  pm.expect(responseJson.category.name).to.eql(\"Test_category_name\");\r",
+											"  pm.expect(responseJson.name).to.eql(\"Test_pets_name\");\r",
+											"  pm.expect(photoUrls).to.eql(\"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\");\r",
+											"  pm.expect(responseJson.tags[0].id).to.eql(0);\r",
+											"  pm.expect(responseJson.tags[0].name).to.eql(\"test_tag_name\");\r",
+											"  pm.expect(responseJson.status).to.eql(\"available\");\r",
+											"});\r",
+											"\r",
+											"// перевірка типів даних у відовіді\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Перевірка типів даних у відповіді\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.category).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.category.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.category.name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData.photoUrls).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.tags[0].name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData.status).to.be.an(\"string\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 1,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"Test_category_name\"\r\n  },\r\n  \"name\": \"Test_pets_name\",\r\n  \"photoUrls\": [\r\n    \"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"test_tag_name\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Виконання запиту, без параметру \"tags\" в тілі запиту",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"var photoUrls = data.photoUrls[0]; //data is array\r",
+											"\r",
+											"// перевірка даних у відповіді\r",
+											"pm.test(\"Перевірка даних у відповіді\", () => {\r",
+											"  const responseJson = pm.response.json();\r",
+											"  pm.expect(responseJson.id).to.eql(1);\r",
+											"  pm.expect(responseJson.category.id).to.eql(1);\r",
+											"  pm.expect(responseJson.category.name).to.eql(\"Test_category_name\");\r",
+											"  pm.expect(responseJson.name).to.eql(\"Test_pets_name\");\r",
+											"  pm.expect(photoUrls).to.eql(\"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\");\r",
+											"  pm.expect(responseJson.status).to.eql(\"available\");\r",
+											"});\r",
+											"\r",
+											"// перевірка типів даних у відовіді\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Перевірка типів даних у відповіді\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.category).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.category.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.category.name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData.photoUrls).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.status).to.be.an(\"string\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 1,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"Test_category_name\"\r\n  },\r\n  \"name\": \"Test_pets_name\",\r\n  \"photoUrls\": [\r\n    \"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\"\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Виконання запиту, без параметру \"photoUrls\" в тілі запиту",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"var photoUrls = data.photoUrls[0]; //data is array\r",
+											"\r",
+											"// перевірка даних у відповіді\r",
+											"pm.test(\"Перевірка даних у відповіді\", () => {\r",
+											"  const responseJson = pm.response.json();\r",
+											"  pm.expect(responseJson.id).to.eql(1);\r",
+											"  pm.expect(responseJson.category.id).to.eql(1);\r",
+											"  pm.expect(responseJson.category.name).to.eql(\"Test_category_name\");\r",
+											"  pm.expect(responseJson.name).to.eql(\"Test_pets_name\");\r",
+											"  pm.expect(responseJson.tags[0].id).to.eql(0);\r",
+											"  pm.expect(responseJson.tags[0].name).to.eql(\"test_tag_name\");\r",
+											"  pm.expect(responseJson.status).to.eql(\"available\");\r",
+											"});\r",
+											"\r",
+											"// перевірка типів даних у відовіді\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Перевірка типів даних у відповіді\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.category).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.category.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.category.name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData.photoUrls).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.tags[0].name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData.status).to.be.an(\"string\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 1,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"Test_category_name\"\r\n  },\r\n  \"name\": \"Test_pets_name\",\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"test_tag_name\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Виконання запиту, без параметру \"category\" в тілі запиту",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"var photoUrls = data.photoUrls[0]; //data is array\r",
+											"\r",
+											"// перевірка даних у відповіді\r",
+											"pm.test(\"Перевірка даних у відповіді\", () => {\r",
+											"  const responseJson = pm.response.json();\r",
+											"  pm.expect(responseJson.id).to.eql(1);\r",
+											"  pm.expect(responseJson.name).to.eql(\"Test_pets_name\");\r",
+											"  pm.expect(photoUrls).to.eql(\"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\");\r",
+											"  pm.expect(responseJson.tags[0].id).to.eql(0);\r",
+											"  pm.expect(responseJson.tags[0].name).to.eql(\"test_tag_name\");\r",
+											"  pm.expect(responseJson.status).to.eql(\"available\");\r",
+											"});\r",
+											"\r",
+											"// перевірка типів даних у відовіді\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Перевірка типів даних у відповіді\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.photoUrls).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.tags[0].name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData.status).to.be.an(\"string\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 1,\r\n  \"name\": \"Test_pets_name\",\r\n  \"photoUrls\": [\r\n    \"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"test_tag_name\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Перевірка GET запиту /pet/findByStatus",
+					"item": [
+						{
+							"name": "Виконання запиту із статусом \"available\"",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json()\r",
+											"\r",
+											"// перевірка типів даних у відовіді\r",
+											"pm.test(\"Перевірка типів даних у відповіді\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData[0].category).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData[0].category.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData[0].category.name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData[0].photoUrls).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].tags).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].tags[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData[0].tags[0].name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData[0].status).to.be.an(\"string\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Перевірка що у відповіді статус = avable\", () => {\r",
+											"    _.each(jsonData, (item) => {\r",
+											"        pm.expect(item.status).to.include('available')\r",
+											"    })\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/pet/findByStatus?status=available",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet",
+										"findByStatus"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "available"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Виконання запиту із статусом \"pending\"",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json()\r",
+											"\r",
+											"// перевірка типів даних у відовіді\r",
+											"pm.test(\"Перевірка типів даних у відповіді\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData[0].category).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData[0].category.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData[0].category.name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData[0].photoUrls).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].tags).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].tags[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData[0].tags[0].name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData[0].status).to.be.an(\"string\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Перевірка що у відповіді статус = pending\", () => {\r",
+											"    _.each(jsonData, (item) => {\r",
+											"        pm.expect(item.status).to.include('pending')\r",
+											"    })\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/pet/findByStatus?status=pending",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet",
+										"findByStatus"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "pending"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Виконання запиту із статусом \"sold\"",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json()\r",
+											"\r",
+											"// перевірка типів даних у відовіді\r",
+											"pm.test(\"Перевірка типів даних у відповіді\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData[0].photoUrls).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].tags).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData[0].status).to.be.an(\"string\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Перевірка що у відповіді статус = sold\", () => {\r",
+											"    _.each(jsonData, (item) => {\r",
+											"        pm.expect(item.status).to.include('sold')\r",
+											"    })\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/pet/findByStatus?status=sold",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet",
+										"findByStatus"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "sold"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// тестуємо статус відповіді",
+							"pm.test(\"Статус код 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"  pm.response.to.be.ok;",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Негативні тести",
+			"item": [
+				{
+					"name": "Перевірка POST запиту /pet",
+					"item": [
+						{
+							"name": "Виконання запиту, з номером id від'ємним числом",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"var photoUrls = data.photoUrls[0]; //data is array\r",
+											"\r",
+											"// перевірка даних у відповіді\r",
+											"pm.test(\"Перевірка даних у відповіді\", () => {\r",
+											"  const responseJson = pm.response.json();\r",
+											"  pm.expect(responseJson.id).to.eql(1);\r",
+											"  pm.expect(responseJson.category.id).to.eql(1);\r",
+											"  pm.expect(responseJson.category.name).to.eql(\"Test_category_name\");\r",
+											"  pm.expect(responseJson.name).to.eql(\"Test_pets_name\");\r",
+											"  pm.expect(photoUrls).to.eql(\"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\");\r",
+											"  pm.expect(responseJson.tags[0].id).to.eql(0);\r",
+											"  pm.expect(responseJson.tags[0].name).to.eql(\"test_tag_name\");\r",
+											"  pm.expect(responseJson.status).to.eql(\"available\");\r",
+											"});\r",
+											"\r",
+											"// перевірка типів даних у відовіді\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Перевірка типів даних у відповіді\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.category).to.be.an(\"object\");\r",
+											"  pm.expect(jsonData.category.id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.category.name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData.photoUrls).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags).to.be.an(\"array\");\r",
+											"  pm.expect(jsonData.tags[0].id).to.be.a(\"number\");\r",
+											"  pm.expect(jsonData.tags[0].name).to.be.an(\"string\");\r",
+											"  pm.expect(jsonData.status).to.be.an(\"string\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": -1,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"Test_category_name\"\r\n  },\r\n  \"name\": \"Test_pets_name\",\r\n  \"photoUrls\": [\r\n    \"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"test_tag_name\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Виконання запиту, з номером id > 20 символів",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 10000000000000000000,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"Test_category_name\"\r\n  },\r\n  \"name\": \"Test_pets_name\",\r\n  \"photoUrls\": [\r\n    \"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"test_tag_name\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Виконання запиту, з даними в параметрі \"status\", відмінними від допустимих",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// перевірка даних у відповіді\r",
+											"pm.test(\"Перевірка того що статус у відповіді не дорівнює не валідному параметру\", () => {\r",
+											"    const responseJson = pm.response.json();\r",
+											"  pm.expect(responseJson.status).not.eql(\"available2\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 1,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"Test_category_name\"\r\n  },\r\n  \"name\": \"Test_pets_name\",\r\n  \"photoUrls\": [\r\n    \"https://play-lh.googleusercontent.com/FGXHbxUnUjOaIOqqIMkiXR-LOitE1jxn70Dk8-RHLT62JsornX0bG2JIAIRJucPa-Q=s360-rw\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"test_tag_name\"\r\n    }\r\n  ],\r\n  \"status\": \"available2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// тестуємо статус відповіді",
+							"pm.test(\"Статус код 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"  pm.response.to.be.ok;",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Відповідь в JSON форматі\", function () {",
+					"    pm.response.to.be.json;",
+					"});"
+				]
+			}
+		}
+	]
+}
